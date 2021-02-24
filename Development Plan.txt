@@ -1,7 +1,7 @@
 Step-by-step plan
-1. Figure out how to extract and manipulate data from the MNIST 
-2. Implement gradient descent (import from already completed python files)
-3. Plan out general architecture for neural network
+1. Figure out how to extract and manipulate data from the MNIST (Done)
+2. Implement gradient descent (import from already completed python files) (Done)
+3. Plan out general architecture for neural network (In Progress)
     a. Number of input units: dimensions of x(i)
     b. Number of output units: number of classes y(i)
     c. Number of hidden units per layer
