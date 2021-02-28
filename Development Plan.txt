@@ -16,3 +16,23 @@ Reminder to split the test dataset into 50/50 CV/Test.
 
 F-score history (F-score = 2PR/(P+R))
 
+Work Log
+
+To-do List:
+- feature scaling
+
+Feb 24
+Project begins
+
+Feb 25
+Finished implementing load_data
+
+Feb 28 
+
+Attempt 1: using a single hidden layer with 29 units
+            Matrix 1 - 2: 785 x 785    Matrix 2 - 3: 10 x 785              
+x(i) (dim: 785 x 1) --> a1......a29 --> prediction for y(i) (dim 10 x 1)
+Finished initialization of matrix and forward propagation, feature scaling
+
+n = 785 too many features???
+
