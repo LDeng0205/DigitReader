@@ -1,14 +1,14 @@
 Step-by-step plan
 1. Figure out how to extract and manipulate data from the MNIST (Done)
 2. Implement gradient descent (import from already completed python files) (Done)
-3. Plan out general architecture for neural network (In Progress)
+3. Plan out general architecture for neural network (Done)
     a. Number of input units: dimensions of x(i)
     b. Number of output units: number of classes y(i)
     c. Number of hidden units per layer
     d. Default: 1 hidden layer, randomize initial parameters Theta
-4. Implement forward propagation
-5. Implement cost function
-6. Implement back prop to compute partial derivatives
+4. Implement forward propagation (Done)
+5. Implement cost function (Done)
+6. Implement back prop to compute partial derivatives (IP)
 7. Gradient checking to check implementation of back prop
 8. Gradient descent for optimizing the cost function
 
@@ -36,3 +36,8 @@ Finished initialization of matrix and forward propagation, feature scaling
 
 n = 785 too many features???
 
+Feb 29
+
+Proceed with current design. Reduce batch size to 200 -- executable amount.
+- Fixed implementation detail (bias unit) in forward propagation
+- Implemented cost function

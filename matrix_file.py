@@ -7,7 +7,7 @@ def write(Theta):
         for i in range(len(Theta)):
             for line in Theta[i]:
                 for num in line:
-                    file.write(str(round(random.uniform(-0.5, 0.5), 3)) + " ")
+                    file.write(str(round(random.uniform(-0.01, 0.01), 4)) + " ")
                 file.write("\n")
     return
 
