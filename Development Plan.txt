@@ -36,8 +36,13 @@ Finished initialization of matrix and forward propagation, feature scaling
 
 n = 785 too many features???
 
-Feb 29
+March 1
 
 Proceed with current design. Reduce batch size to 200 -- executable amount.
 - Fixed implementation detail (bias unit) in forward propagation
 - Implemented cost function
+
+March 2
+
+Finished first implementation of backprop. Don't know whether it works or not because
+gradient checking is too slow. 
