@@ -101,7 +101,7 @@ def backprop(Theta, X = train_img, Y = train_label):
             if l < L - 2:
                 mtx = mtx[1:, :]
             DELTA[l] = DELTA[l] + mtx
-            print("========================start=======")
+            print("========================")
             print(DELTA[l])
             print("========================")
     for l in range(L - 1):
