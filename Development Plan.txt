@@ -46,3 +46,27 @@ March 2
 
 Finished first implementation of backprop. Don't know whether it works or not because
 gradient checking is too slow. 
+
+March 3
+
+Maybe backprop is working... No time to spend on this project today.
+Figured out how to plot matrix as img.
+
+Too many hidden units in the second layer. Computationally expensive and changing the value of 
+one weight has virtually no effect:
+    check = Theta[:]
+    check[0][75][100] += 10
+    print(J(Theta, train_img[0], train_label[0]))
+    print(J(check, train_img[0], train_label[0]))
+The above code produced exact same answers precise to 15 decimal places....
+Too many weights ==> individual weights accounts for a neglegible amount of output.
+
+New design:
+
+785 features still
+1 hidden layer
+10 units + 1 bias unit
+
+Theta size:
+0: 10 * 785
+1: 10 * 11
