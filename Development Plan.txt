@@ -70,3 +70,11 @@ New design:
 Theta size:
 0: 10 * 785
 1: 10 * 11
+
+March 5
+
+Change architecture.
+
+Verified buggy implementation of backprop.
+
+Debugging.
