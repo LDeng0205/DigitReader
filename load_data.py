@@ -46,31 +46,30 @@ def initialize():
 
     train_len, test_len, dim = len(train_img_raw), len(test_img_raw), 28
 
-    train_len //= 300 # for faster processing during development
-
+    train_len //= 60 # for faster processing during development
+    test_len //= 30
     ### x(i) is a 28^2 + 1 dimension vector, index 0 is x0, the intercept term
     train_img = [train_img_raw[i].reshape([dim**2]) for i in range(train_len)]
-    # test_img = [test_img_raw[i].reshape([dim**2]) for i in range(test_len)]
+    test_img = [test_img_raw[i].reshape([dim**2]) for i in range(test_len)]
     
     ### feature scaling
     train_img = feature_scaling(train_img, train_len, dim**2)
-    # test_img = feature_scaling(test_img, test_len, dim**2)
+    test_img = feature_scaling(test_img, test_len, dim**2)
     
     ### y(i) is a 10 dimension vector
     train_label = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0] for i in range(train_len)]
-    # test_label = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0] for i in range(test_len)]
+    test_label = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0] for i in range(test_len)]
 
     for i in range(train_len):
         train_img[i] = np.append([1], train_img[i]) # add the intercept term
         train_label[i][train_result[i]] = 1
-    # for i in range(test_len):
-    #     test_img[i] = np.append([1], test_img[i]) # add the intercept term
-    #     test_label[i][test_result[i]] = 1
+    for i in range(test_len):
+        test_img[i] = np.append([1], test_img[i]) # add the intercept term
+        test_label[i][test_result[i]] = 1
 
     ### splitting test set to 50% test and 50% cross validation
-    # CV_label, CV_img = test_label[test_len//2:], test_img[test_len//2:]
-    # test_label, test_img = test_label[:test_len//2], test_img[:test_len//2]
+    CV_label, CV_img = test_label[test_len//2:], test_img[test_len//2:]
+    test_label, test_img = test_label[:test_len//2], test_img[:test_len//2]
 
     ### returns three sets: train, CV, and test
-    return train_img, train_label#, CV_img, CV_label, test_img, test_label
-
+    return train_img, train_label, CV_img, CV_label, test_img, test_label

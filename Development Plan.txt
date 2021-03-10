@@ -8,9 +8,9 @@ Step-by-step plan
     d. Default: 1 hidden layer, randomize initial parameters Theta
 4. Implement forward propagation (Done)
 5. Implement cost function (Done)
-6. Implement back prop to compute partial derivatives (IP)
-7. Gradient checking to check implementation of back prop
-8. Gradient descent for optimizing the cost function
+6. Implement back prop to compute partial derivatives (Done)
+7. Gradient checking to check implementation of back prop (Done)
+8. Gradient descent for optimizing the cost function (Done)
 
 Reminder to split the test dataset into 50/50 CV/Test.
 
@@ -78,3 +78,16 @@ Change architecture.
 Verified buggy implementation of backprop.
 
 Debugging.
+
+March 9
+
+Debugging backprop continues.
+
+Improved Forward Propagation and Cost function.
+
+Fixed non-existent bug.
+
+March 10
+
+OK NEURAL NETWORK WORKS!!!
+NOW I HAVE TO THINK ABOUT HOW TO TRAIN IT EFFICIENTLY!

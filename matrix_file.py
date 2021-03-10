@@ -1,14 +1,21 @@
 import random
-def write(Theta):
+def write(Theta, trained = False):
     """ write to the file a new set of random initial values
     """
     with open("theta.txt", "w") as file:
         file.truncate(0)
-        for i in range(len(Theta)):
-            for line in Theta[i]:
-                for num in line:
-                    file.write(str(round(random.uniform(-10, 10), 4)) + " ")
-                file.write("\n")
+        if not trained:
+            for i in range(len(Theta)):
+                for line in Theta[i]:
+                    for num in line:
+                        file.write(str(round(random.uniform(-1, 1), 4)) + " ")
+                    file.write("\n")
+        else:
+            for i in range(len(Theta)):
+                for line in Theta[i]:
+                    for num in line:
+                        file.write(str(num) + " ")
+                    file.write("\n")
     return
 
 def read(Theta):
