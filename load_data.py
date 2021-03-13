@@ -46,7 +46,7 @@ def initialize():
 
     train_len, test_len, dim = len(train_img_raw), len(test_img_raw), 28
 
-    train_len //= 60 # for faster processing during development
+    train_len //= 6 # for faster processing during development
     test_len //= 30
     ### x(i) is a 28^2 + 1 dimension vector, index 0 is x0, the intercept term
     train_img = [train_img_raw[i].reshape([dim**2]) for i in range(train_len)]

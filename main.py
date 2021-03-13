@@ -97,13 +97,13 @@ def back_prop(Theta, x, y):
                             np.hstack(([1], sigmoid_derivative(a[k][1:]))))
     return a, z, h, delta
 
-def train(Theta, m, X = train_img, Y = train_label):
+def train(Theta, m, t, X = train_img, Y = train_label):
     """ training neural network
     """
-    max_iter, iter, tolerance = 100, 0, 1e-06
+    max_iter, iter, tolerance = t, 0, 1e-06
     graph = [] # for graphing cost
     while iter < max_iter:
-        print(iter)
+        print("loop count: ", iter)
         DELTA = [np.zeros((Theta[i].shape[0], Theta[i].shape[1])) for i in range(L)]
         for i in range(m):
             ### construct delta, index 0 should always be []
@@ -147,7 +147,7 @@ def predict(Theta, x):
     return np.argmax(h)
 
 
-matrix_file.write(train(Theta, m = 1000), trained = True)
+matrix_file.write(train(Theta, m = 10000, t = 2), trained = True)
 
 
 
