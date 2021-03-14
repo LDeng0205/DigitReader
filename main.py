@@ -12,7 +12,7 @@ n = 785
 m = len(train_img)
 m_CV = len(CV_img)
 m_test = len(test_img)
-lam = 0.01 #lambda -- regularization parameter (Bias/Variance tradeoff)
+lam = 0.001 #lambda -- regularization parameter (Bias/Variance tradeoff)
 L = 2 # layers: layer 0, layer 1, layer 2
 learning_rate = 0.1
 
@@ -103,7 +103,7 @@ def train(Theta, m, t, X = train_img, Y = train_label):
     max_iter, iter, tolerance = t, 0, 1e-06
     graph = [] # for graphing cost
     while iter < max_iter:
-        print("loop count: ", iter)
+        print("loop count: ", iter, "/", max_iter)
         DELTA = [np.zeros((Theta[i].shape[0], Theta[i].shape[1])) for i in range(L)]
         for i in range(m):
             ### construct delta, index 0 should always be []
@@ -126,7 +126,11 @@ def train(Theta, m, t, X = train_img, Y = train_label):
                         DELTA[l][i][j] = 1/m * DELTA[l][i][j] + lam * Theta[l][i][j]
         # DELTA are the matrices of partial derivatives
         cont = update(DELTA, Theta, tolerance)
-        
+        if (not cont):
+            break
+        if iter % 5 == 0:
+            matrix_file.write(Theta, trained = True)
+            print("Weights saved: ", iter)
         graph.append(J_total(Theta, X, Y, m))
         iter += 1
     plt.plot(graph)
@@ -146,8 +150,8 @@ def predict(Theta, x):
     # print(np.argmax(h))
     return np.argmax(h)
 
+train(Theta, m = 60000, t = 150)
 
-matrix_file.write(train(Theta, m = 10000, t = 2), trained = True)
 
 
 

@@ -4,6 +4,7 @@ import numpy as np
 # print(main.Theta)
 l = len(main.CV_img)
 correct = 0
+print("CV length: ", l)
 for i in range(l):
     if main.predict(main.Theta, main.CV_img[i]) == np.argmax(main.CV_label[i]):
         correct += 1
