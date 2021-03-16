@@ -1,9 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import load_data, matrix_file
+from datetime import datetime
 ### Last Modified: Mar 1, 2021
 
+print("Launched: ", datetime.now().strftime("%H:%M:%S"))
 train_img, train_label, CV_img, CV_label, test_img, test_label = load_data.initialize()
+print("Finished loading and processing data: ", datetime.now().strftime("%H:%M:%S"))
 # train_img, train_label = load_data.initialize()
 ### Implement neural network, forward propagation, cost function here. 
 ### This is the file to run.
@@ -14,7 +17,9 @@ m_CV = len(CV_img)
 m_test = len(test_img)
 lam = 0.001 #lambda -- regularization parameter (Bias/Variance tradeoff)
 L = 2 # layers: layer 0, layer 1, layer 2
-learning_rate = 0.1
+learning_rate = 0.3
+batch = [(0, 5000), (5000, 10000), (10000, 15000), (15000, 20000), (20000, 25000), (25000, 30000),
+            (30000, 35000), (35000, 40000), (40000, 45000), (45000, 50000), (50000, 55000), (55000, 60000)]
 
 
 ### Tranfer Matrices with randomly initialized weights
@@ -97,15 +102,16 @@ def back_prop(Theta, x, y):
                             np.hstack(([1], sigmoid_derivative(a[k][1:]))))
     return a, z, h, delta
 
-def train(Theta, m, t, X = train_img, Y = train_label):
+def train(Theta, m_start, m_end, t, X = train_img, Y = train_label):
     """ training neural network
     """
     max_iter, iter, tolerance = t, 0, 1e-06
     graph = [] # for graphing cost
+    print(datetime.now().strftime("%H:%M:%S"))
     while iter < max_iter:
         print("loop count: ", iter, "/", max_iter)
         DELTA = [np.zeros((Theta[i].shape[0], Theta[i].shape[1])) for i in range(L)]
-        for i in range(m):
+        for i in range(m_start, m_end):
             ### construct delta, index 0 should always be []
             a, z, h, delta = back_prop(Theta, X[i], Y[i])
             for l in range(L):
@@ -128,14 +134,13 @@ def train(Theta, m, t, X = train_img, Y = train_label):
         cont = update(DELTA, Theta, tolerance)
         if (not cont):
             break
-        if iter % 5 == 0:
+        if iter % 10 == 0:
             matrix_file.write(Theta, trained = True)
             print("Weights saved: ", iter)
         graph.append(J_total(Theta, X, Y, m))
         iter += 1
-    plt.plot(graph)
-    plt.show()
-    return Theta
+    print("Batch finished: ", datetime.now().strftime("%H:%M:%S"), f' (for samples {m_start} to {m_end})')
+    return graph
 def update(PD, Theta, tolerance, LR = learning_rate):
     cont = False
     for l in range(len(Theta)):
@@ -150,8 +155,15 @@ def predict(Theta, x):
     # print(np.argmax(h))
     return np.argmax(h)
 
-train(Theta, m = 60000, t = 150)
+graphs = []
+for b in batch[5:10]:
+    print(f'======Batch {b[0]} - {b[1]}======')
+    print("Time: ", datetime.now().strftime("%H:%M:%S"))
+    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 50))
 
-
+print("Done: ", datetime.now().strftime("%H:%M:%S"))
+for graph in graphs:
+    plt.plot(graph)
+plt.show()
 
 
