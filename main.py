@@ -17,10 +17,10 @@ m_CV = len(CV_img)
 m_test = len(test_img)
 lam = 0.001 #lambda -- regularization parameter (Bias/Variance tradeoff)
 L = 2 # layers: layer 0, layer 1, layer 2
-learning_rate = 0.3
+learning_rate = 0.1
 batch = [(0, 5000), (5000, 10000), (10000, 15000), (15000, 20000), (20000, 25000), (25000, 30000),
             (30000, 35000), (35000, 40000), (40000, 45000), (45000, 50000), (50000, 55000), (55000, 60000)]
-
+test_batch = [(50000, 50500)]
 
 ### Tranfer Matrices with randomly initialized weights
 ### Theta[j] maps layer j to layer j + 1
@@ -156,12 +156,13 @@ def predict(Theta, x):
     return np.argmax(h)
 
 graphs = []
-for b in batch[5:10]:
+start = datetime.now()
+for b in test_batch[:]:
     print(f'======Batch {b[0]} - {b[1]}======')
     print("Time: ", datetime.now().strftime("%H:%M:%S"))
-    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 50))
+    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 500))
 
-print("Done: ", datetime.now().strftime("%H:%M:%S"))
+print("Done: ", datetime.now().strftime("%H:%M:%S"), " Started at: ", start.strftime("%H:%M:%S"))
 for graph in graphs:
     plt.plot(graph)
 plt.show()
