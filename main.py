@@ -20,7 +20,6 @@ L = 2 # layers: layer 0, layer 1, layer 2
 learning_rate = 0.1
 batch = [(0, 5000), (5000, 10000), (10000, 15000), (15000, 20000), (20000, 25000), (25000, 30000),
             (30000, 35000), (35000, 40000), (40000, 45000), (45000, 50000), (50000, 55000), (55000, 60000)]
-test_batch = [(50000, 50500)]
 
 ### Tranfer Matrices with randomly initialized weights
 ### Theta[j] maps layer j to layer j + 1
@@ -50,19 +49,19 @@ def J(h, y):
     for k in range(len(h)):
         c += -(y[k]*np.log(h[k])+(1-y[k])*np.log(1-h[k]))
     return c
-def J_total(Theta, X, Y, m):
+def J_total(Theta, X, Y, m_start, m_end):
     """ Cost function for the training set size m
     """
     cost, reg = 0, 0
-    for i in range(m):
+    for i in range(m_start, m_end):
         a, z, h = forward_prop(Theta, X[i])
         cost += J(h, Y[i])
-    cost /= m
+    cost /= (m_end - m_start)
     for l in range(len(Theta)):
         for i in range(Theta[l].shape[0]):
             for j in range(Theta[l].shape[1]):
                 reg += Theta[l][i][j] ** 2
-    reg *= lam / (2 * m)
+    reg *= lam / (2 * (m_end - m_start))
     return cost + reg
 
 def forward_prop(Theta, x):
@@ -126,10 +125,10 @@ def train(Theta, m_start, m_end, t, X = train_img, Y = train_label):
                 for j in range(col):
                     if j == 0:
                         # no regularization term for the first row
-                        DELTA[l][i][j] = 1/m * DELTA[l][i][j]
+                        DELTA[l][i][j] = 1/(m_end - m_start) * DELTA[l][i][j]
                     else: 
                         # add regularization
-                        DELTA[l][i][j] = 1/m * DELTA[l][i][j] + lam * Theta[l][i][j]
+                        DELTA[l][i][j] = 1/(m_end - m_start) + lam * Theta[l][i][j]
         # DELTA are the matrices of partial derivatives
         cont = update(DELTA, Theta, tolerance)
         if (not cont):
@@ -137,7 +136,10 @@ def train(Theta, m_start, m_end, t, X = train_img, Y = train_label):
         if iter % 10 == 0:
             matrix_file.write(Theta, trained = True)
             print("Weights saved: ", iter)
-        graph.append(J_total(Theta, X, Y, m))
+            
+            J = J_total(Theta, X, Y, m_start, m_end)
+            print("cost: ", J)
+            graph.append(J)
         iter += 1
     print("Batch finished: ", datetime.now().strftime("%H:%M:%S"), f' (for samples {m_start} to {m_end})')
     return graph
@@ -157,11 +159,11 @@ def predict(Theta, x):
 
 graphs = []
 start = datetime.now()
-for b in test_batch[:]:
-    print(f'======Batch {b[0]} - {b[1]}======')
-    print("Time: ", datetime.now().strftime("%H:%M:%S"))
-    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 500))
-
+# for b in batch[7:8]:
+#     print(f'======Batch {b[0]} - {b[1]}======')
+#     print("Time: ", datetime.now().strftime("%H:%M:%S"))
+#     graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 50))
+graphs.append(train(Theta, m_start = 0, m_end = 60000, t = 100))
 print("Done: ", datetime.now().strftime("%H:%M:%S"), " Started at: ", start.strftime("%H:%M:%S"))
 for graph in graphs:
     plt.plot(graph)
