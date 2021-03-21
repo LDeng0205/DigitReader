@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import load_data, gradient_descent, matrix_file
+import load_data, matrix_file
 
 ### Last Modified: Mar 1, 2021
 

@@ -20,7 +20,6 @@ L = 2 # layers: layer 0, layer 1, layer 2
 learning_rate = 0.1
 batch = [(0, 5000), (5000, 10000), (10000, 15000), (15000, 20000), (20000, 25000), (25000, 30000),
             (30000, 35000), (35000, 40000), (40000, 45000), (45000, 50000), (50000, 55000), (55000, 60000)]
-test_batch = [(50000, 50500)]
 
 ### Tranfer Matrices with randomly initialized weights
 ### Theta[j] maps layer j to layer j + 1
@@ -50,19 +49,19 @@ def J(h, y):
     for k in range(len(h)):
         c += -(y[k]*np.log(h[k])+(1-y[k])*np.log(1-h[k]))
     return c
-def J_total(Theta, X, Y, m):
+def J_total(Theta, X, Y, m_start, m_end):
     """ Cost function for the training set size m
     """
     cost, reg = 0, 0
-    for i in range(m):
+    for i in range(m_start, m_end):
         a, z, h = forward_prop(Theta, X[i])
         cost += J(h, Y[i])
-    cost /= m
+    cost /= (m_end - m_start)
     for l in range(len(Theta)):
         for i in range(Theta[l].shape[0]):
             for j in range(Theta[l].shape[1]):
                 reg += Theta[l][i][j] ** 2
-    reg *= lam / (2 * m)
+    reg *= lam / (2 * (m_end - m_start))
     return cost + reg
 
 def forward_prop(Theta, x):
@@ -137,7 +136,10 @@ def train(Theta, m_start, m_end, t, X = train_img, Y = train_label):
         if iter % 10 == 0:
             matrix_file.write(Theta, trained = True)
             print("Weights saved: ", iter)
-        graph.append(J_total(Theta, X, Y, m))
+            
+            J = J_total(Theta, X, Y, m_start, m_end)
+            print("cost: ", J)
+            graph.append(J)
         iter += 1
     print("Batch finished: ", datetime.now().strftime("%H:%M:%S"), f' (for samples {m_start} to {m_end})')
     return graph
