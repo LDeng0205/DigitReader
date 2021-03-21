@@ -126,10 +126,10 @@ def train(Theta, m_start, m_end, t, X = train_img, Y = train_label):
                 for j in range(col):
                     if j == 0:
                         # no regularization term for the first row
-                        DELTA[l][i][j] = 1/m * DELTA[l][i][j]
+                        DELTA[l][i][j] = 1/(m_end - m_start) * DELTA[l][i][j]
                     else: 
                         # add regularization
-                        DELTA[l][i][j] = 1/m * DELTA[l][i][j] + lam * Theta[l][i][j]
+                        DELTA[l][i][j] = 1/(m_end - m_start) * DELTA[l][i][j] + lam * Theta[l][i][j]
         # DELTA are the matrices of partial derivatives
         cont = update(DELTA, Theta, tolerance)
         if (not cont):
@@ -157,14 +157,15 @@ def predict(Theta, x):
 
 graphs = []
 start = datetime.now()
-for b in test_batch[:]:
+for b in batch[:]:
     print(f'======Batch {b[0]} - {b[1]}======')
     print("Time: ", datetime.now().strftime("%H:%M:%S"))
-    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 500))
+    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 50))
 
 print("Done: ", datetime.now().strftime("%H:%M:%S"), " Started at: ", start.strftime("%H:%M:%S"))
 for graph in graphs:
     plt.plot(graph)
 plt.show()
+
 
 
