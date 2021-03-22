@@ -162,7 +162,7 @@ start = datetime.now()
 for b in batch[:]:
     print(f'======Batch {b[0]} - {b[1]}======')
     print("Time: ", datetime.now().strftime("%H:%M:%S"))
-    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 50))
+    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 60))
 
 print("Done: ", datetime.now().strftime("%H:%M:%S"), " Started at: ", start.strftime("%H:%M:%S"))
 for graph in graphs:
