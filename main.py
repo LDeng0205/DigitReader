@@ -15,7 +15,7 @@ n = 785
 m = len(train_img)
 m_CV = len(CV_img)
 m_test = len(test_img)
-lam = 0.005 #lambda -- regularization parameter (Bias/Variance tradeoff)
+lam = 0.01 #lambda -- regularization parameter (Bias/Variance tradeoff)
 L = 2 # layers: layer 0, layer 1, layer 2
 learning_rate = 0.1
 batch = [(0, 5000), (5000, 10000), (10000, 15000), (15000, 20000), (20000, 25000), (25000, 30000),
@@ -107,7 +107,7 @@ def train(Theta, m_start, m_end, t, X = train_img, Y = train_label):
     max_iter, iter, tolerance = t, 0, 1e-06
     graph = [] # for graphing cost
     print(datetime.now().strftime("%H:%M:%S"))
-    while iter < max_iter:
+    while iter < max_iter + 1:
         print("loop count: ", iter, "/", max_iter)
         DELTA = [np.zeros((Theta[i].shape[0], Theta[i].shape[1])) for i in range(L)]
         for i in range(m_start, m_end):
@@ -166,7 +166,7 @@ start = datetime.now()
 for b in batch[:]:
     print(f'======Batch {b[0]} - {b[1]}======')
     print("Time: ", datetime.now().strftime("%H:%M:%S"))
-    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 60))
+    graphs.append(train(Theta, m_start = b[0], m_end = b[1], t = 10))
 
 print("Done: ", datetime.now().strftime("%H:%M:%S"), " Started at: ", start.strftime("%H:%M:%S"))
 for graph in graphs:
