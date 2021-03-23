@@ -85,9 +85,13 @@ Debugging backprop continues.
 
 Improved Forward Propagation and Cost function.
 
-Fixed non-existent bug.
+Fixed non-existent bug. Problem was with using only one set for gradient checking.
 
 March 10
 
 OK NEURAL NETWORK WORKS!!!
 NOW I HAVE TO THINK ABOUT HOW TO TRAIN IT EFFICIENTLY!
+
+March 22
+
+Almost done. Doing a run on the test set for the final result.

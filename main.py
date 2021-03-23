@@ -15,7 +15,7 @@ n = 785
 m = len(train_img)
 m_CV = len(CV_img)
 m_test = len(test_img)
-lam = 0.001 #lambda -- regularization parameter (Bias/Variance tradeoff)
+lam = 0.005 #lambda -- regularization parameter (Bias/Variance tradeoff)
 L = 2 # layers: layer 0, layer 1, layer 2
 learning_rate = 0.1
 batch = [(0, 5000), (5000, 10000), (10000, 15000), (15000, 20000), (20000, 25000), (25000, 30000),
@@ -144,6 +144,8 @@ def train(Theta, m_start, m_end, t, X = train_img, Y = train_label):
     print("Batch finished: ", datetime.now().strftime("%H:%M:%S"), f' (for samples {m_start} to {m_end})')
     return graph
 def update(PD, Theta, tolerance, LR = learning_rate):
+    """ Updating Theta after each iteration of gradient descent
+    """
     cont = False
     for l in range(len(Theta)):
         for i in range(Theta[l].shape[0]):
@@ -153,6 +155,8 @@ def update(PD, Theta, tolerance, LR = learning_rate):
                     cont = True
     return cont
 def predict(Theta, x):
+    """ Predict result based on hypothesis
+    """
     a, z, h = forward_prop(Theta, x)
     # print(np.argmax(h))
     return np.argmax(h)
