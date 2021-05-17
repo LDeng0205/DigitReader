@@ -1,8 +1,8 @@
 import random
-def write(Theta, trained = False):
+def write(Theta, trained = False, filename = 'theta.txt'):
     """ write to the file a new set of random initial values
     """
-    with open("theta.txt", "w") as file:
+    with open(filename, "w") as file:
         file.truncate(0)
         if not trained:
             for i in range(len(Theta)):
@@ -18,10 +18,10 @@ def write(Theta, trained = False):
                     file.write("\n")
     return
 
-def read(Theta):
+def read(Theta, filename = 'theta.txt'):
     """ read data stored in theta.txt
     """
-    with open("theta.txt", "r") as file:
+    with open(filename, "r") as file:
         idx, i, j = 0, 0, 0
         for line in file:
             for num in line.split():

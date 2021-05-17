@@ -95,3 +95,11 @@ NOW I HAVE TO THINK ABOUT HOW TO TRAIN IT EFFICIENTLY!
 March 22
 
 Almost done. Doing a run on the test set for the final result.
+
+March 23 
+
+Project Done
+
+May 17
+
+Adding PCA to data to speed up processing time. Reduce dimensions.
